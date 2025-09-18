@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>문소라님의 포트폴리오</title>
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #007bff; /* 포인트 컬러 */
+            --background-color: #f8f9fa; /* 부드러운 배경색 */
+            --card-background: #ffffff;
+            --text-color: #343a40;
+            --light-text-color: #6c757d;
+            --heading-color: #212529;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            --border-radius: 12px;
+        }
+
+        /* 기본 스타일 및 스크롤 애니메이션 */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.7;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+        
+        /* 네비게이션 바 */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 10px 40px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .nav-logo a {
+            font-weight: 700;
+            font-size: 1.5em;
+            color: var(--heading-color);
+            text-decoration: none;
+        }
+        .nav-links a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: var(--light-text-color);
+            font-weight: 400;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* 컨테이너 */
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* 헤더 (Hero) */
+        header {
+            text-align: center;
+            padding: 80px 20px;
+        }
+        header h1 {
+            font-size: 3.5em;
+            font-weight: 700;
+            color: var(--heading-color);
+            margin-bottom: 10px;
+        }
+        header .subtitle {
+            font-size: 1.5em;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        header .description {
+            max-width: 600px;
+            margin: 0 auto;
+            color: var(--light-text-color);
+        }
+
+        /* 섹션 공통 스타일 & 나타나는 애니메이션 */
+        section {
+            padding: 60px 0;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        h2 {
+            text-align: center;
+            font-size: 2.2em;
+            font-weight: 600;
+            color: var(--heading-color);
+            margin-bottom: 50px;
+            position: relative;
+        }
+        h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--primary-color);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* 기술 스택 (Pill 스타일) */
+        #skills .skill-category {
+            margin-bottom: 30px;
+        }
+        #skills h3 {
+            font-size: 1.2em;
+            color: var(--heading-color);
+            margin-bottom: 15px;
+        }
+        #skills .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        #skills .skill-tag {
+            background-color: var(--card-background);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.95em;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            font-weight: 400;
+        }
+
+        /* 프로젝트 (카드 스타일) */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .project-card {
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 25px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        .project-card h3 {
+            margin-top: 0;
+            color: var(--heading-color);
+        }
+        .project-card .role {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 0.9em;
+        }
+        .project-card .tech-stack {
+            margin: 15px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .project-card .tech-tag {
+            background-color: var(--background-color);
+            color: var(--light-text-color);
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-size: 0.8em;
+        }
+        .project-card .github-link {
+            display: inline-block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        .project-card .github-link:hover i {
+            transform: translateX(5px);
+        }
+        .project-card .github-link i {
+            margin-left: 5px;
+            transition: transform 0.3s;
+        }
+        
+        /* 연락처 */
+        #contact {
+            text-align: center;
+        }
+        .contact-links {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+        .contact-links a {
+            font-size: 2em;
+            color: var(--light-text-color);
+            transition: color 0.3s, transform 0.3s;
+        }
+        .contact-links a:hover {
+            color: var(--primary-color);
+            transform: scale(1.2);
+        }
+
+        /* 푸터 */
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            background: #fff;
+            border-top: 1px solid #eee;
+            color: var(--light-text-color);
+        }
+        
+        /* 모바일 반응형 */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 15px;
+            }
+            .nav-links {
+                margin-top: 10px;
+            }
+            header h1 {
+                font-size: 2.5em;
+            }
+            header .subtitle {
+                font-size: 1.2em;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-logo"><a href="#">MUN SORA</a></div>
+        <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <header>
+            <h1>문소라</h1>
+            <p class="subtitle">AI & Embedded Developer</p>
+            <p class="description">
+                하드웨어의 제약을 넘어 인공지능 기술로 새로운 가치를 만듭니다.
+                아이디어를 현실의 제품으로 구현하는 풀스택 개발자입니다.
+            </p>
+        </header>
+
+        <main>
+            <section id="about">
+                <h2>About Me</h2>
+                <p style="text-align: center; max-width: 700px; margin: 0 auto;">
+                    저는 AI 모델을 경량화하여 저전력 임베디드 시스템에 탑재하고, 실시간 데이터 처리 및 제어 시스템을 개발하는 것에 강점이 있습니다. 
+                    소프트웨어와 하드웨어를 아우르는 깊은 이해를 바탕으로 최적의 솔루션을 설계하며, 사용자에게 실질적인 도움이 되는 기술을 만드는 것을 목표로 합니다.
+                </p>
+            </section>
+
+            <section id="skills">
+                <h2>Skills</h2>
+                <div class="skill-category">
+                    <h3>AI / Machine Learning</h3>
+                    <div class="skills-container">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">TensorFlow</span>
+                        <span class="skill-tag">PyTorch</span>
+                        <span class="skill-tag">Scikit-learn</span>
+                        <span class="skill-tag">OpenCV</span>
+                        <span class="skill-tag">Model Optimization</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Embedded Systems</h3>
+                    <div class="skills-container">
+                        <span class="skill-tag">C/C++</span>
+                        <span class="skill-tag">RTOS</span>
+                        <span class="skill-tag">Linux Kernel</span>
+                        <span class="skill-tag">STM32</span>
+                        <span class="skill-tag">Raspberry Pi</span>
+                        <span class="skill-tag">Jetson Nano</span>
+                        <span class="skill-tag">I2C, SPI, UART</span>
+                    </div>
+                </div>
+                 <div class="skill-category">
+                    <h3>Tools & Etc</h3>
+                    <div class="skills-container">
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">Linux</span>
+                        <span class="skill-tag">AWS</span>
+                        <span class="skill-tag">GCP</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="projects">
+                <h2>Projects</h2>
+                <div class="projects-grid">
+                    <article class="project-card">
+                        <h3>스마트 온실 엣지 AI 시스템</h3>
+                        <p>작물 상태를 실시간 분석하여 환경을 자동 제어하는 시스템을 개발했습니다.</p>
+                        <p class="role"><strong>역할:</strong> AI 모델 경량화 및 펌웨어 개발</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">TensorFlow Lite</span>
+                            <span class="tech-tag">C++</span>
+                            <span class="tech-tag">Raspberry Pi</span>
+                        </div>
+                        <a href="https://github.com/your-username/your-project" target="_blank" class="github-link">
+                            코드 보기 <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </article>
+                    <article class="project-card">
+                        <h3>자율주행 드론 제어 시스템</h3>
+                        <p>YOLO 모델을 탑재하여 장애물 회피 및 경로 추종 기능을 구현했습니다.</p>
+                        <p class="role"><strong>역할:</strong> 실시간 제어 알고리즘, 모델 포팅 및 최적화</p>
+                         <div class="tech-stack">
+                            <span class="tech-tag">C++</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">ROS</span>
+                            <span class="tech-tag">PX4</span>
+                             <span class="tech-tag">Jetson Nano</span>
+                        </div>
+                        <a href="https://github.com/your-username/your-project" target="_blank" class="github-link">
+                            코드 보기 <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </article>
+                    <article class="project-card">
+                        <h3>음성 인식 스마트 조명</h3>
+                        <p>MCU에 키워드 인식 모델을 탑재하여 음성으로 조명을 제어합니다.</p>
+                        <p class="role"><strong>역할:</strong> 오디오 신호 처리, 임베디드 모델 구현</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">C</span>
+                            <span class="tech-tag">TF Lite Micro</span>
+                            <span class="tech-tag">ESP32</span>
+                        </div>
+                        <a href="https://github.com/your-username/your-project" target="_blank" class="github-link">
+                            코드 보기 <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </article>
+                </div>
+            </section>
+
+            <section id="contact">
+                <h2>Contact</h2>
+                <p>언제든지 편하게 연락 주세요.</p>
+                <div class="contact-links">
+                    <a href="mailto:your.email@example.com" title="Email"><i class="fas fa-envelope"></i></a>
+                    <a href="https://github.com/your-username" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/your-profile" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 문소라. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // 스크롤 시 섹션이 부드럽게 나타나는 효과
+        const sections = document.querySelectorAll('section');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+
+</body>
+</html>
+
